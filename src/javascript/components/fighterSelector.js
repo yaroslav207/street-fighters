@@ -20,7 +20,11 @@ export function createFightersSelector() {
 const fighterDetailsMap = new Map();
 
 export async function getFighterInfo(fighterId) {
-  // get fighter info from fighterDetailsMap or from service and write it to fighterDetailsMap
+  const result = await fighterService.getFighterDetails(fighterId)
+  Object.keys(result).map((key) => {
+    fighterDetailsMap.set(key, result[key])
+  })
+  return Object.fromEntries(fighterDetailsMap)
 }
 
 function renderSelectedFighters(selectedFighters) {
