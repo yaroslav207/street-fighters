@@ -28,7 +28,63 @@ export async function fight(firstFighter, secondFighter) {
       }
     }
 
-    
+    document.body.addEventListener("keydown", (e) => {
+      switch (e.code) {
+        case controls.PlayerOneBlock: {
+          firstPlayer.block = true;
+          break;
+        }
+        case controls.PlayerTwoBlock: {
+          secondPlayer.block = true;
+          break;
+        }
+        default: {
+          if (Object.keys(firstPlayer.criticalHitKeys).includes(e.code)) {
+            firstPlayer.criticalHitKeys[e.code] = true;
+            if (!(Object.values(firstPlayer.criticalHitKeys).includes(false)) && firstPlayer.criticalHit) {
+              selectDamage(true)(firstPlayer, secondPlayer)
+              firstPlayer.coolDownCriticalHit()
+            }
+          }
+          if (Object.keys(secondPlayer.criticalHitKeys).includes(e.code)) {
+            secondPlayer.criticalHitKeys[e.code] = true;
+            if (!(Object.values(secondPlayer.criticalHitKeys).includes(false)) && secondPlayer.criticalHit) {
+              selectDamage(true)(secondPlayer, firstPlayer)
+              secondPlayer.coolDownCriticalHit()
+            }
+            break;
+          }
+        }
+      }
+    })
+    document.body.addEventListener("keyup", (e) => {
+      switch (e.code) {
+        case controls.PlayerOneAttack: {
+          selectDamage()(firstPlayer, secondPlayer);
+          break;
+        }
+        case controls.PlayerTwoAttack: {
+          selectDamage()(secondPlayer, firstPlayer);
+          break;
+        }
+        case controls.PlayerOneBlock: {
+          firstPlayer.block = false
+          break;
+        }
+        case controls.PlayerTwoBlock: {
+          secondPlayer.block = false
+          break;
+        }
+        default: {
+          if ([...Object.keys(firstPlayer.criticalHitKeys)].includes(e.code)) {
+            firstPlayer.criticalHitKeys[e.code] = false;
+          }
+          if ([...Object.keys(secondPlayer.criticalHitKeys)].includes(e.code)) {
+            secondPlayer.criticalHitKeys[e.code] = false;
+          }
+        }
+      }
+    })
   });
 }
 
