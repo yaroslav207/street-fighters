@@ -2,7 +2,33 @@ import { controls } from '../../constants/controls';
 
 export async function fight(firstFighter, secondFighter) {
   return new Promise((resolve) => {
-    // resolve the promise with the winner when fight is over
+    const firstPlayer = new Player({...firstFighter, criticalHitCombination: controls.PlayerOneCriticalHitCombination})
+    const secondPlayer = new Player({...secondFighter, criticalHitCombination: controls.PlayerTwoCriticalHitCombination})
+
+    function selectDamage(criticalDamage = false) {
+      return function (attacker, defender) {
+        const damage = criticalDamage ? attacker.attack * 2 : getDamage(attacker, defender);
+        if (attacker._id === firstPlayer._id) {
+
+          secondPlayer.takeDamage(damage)
+        } else {
+          firstPlayer.takeDamage(damage)
+        }
+        changeHealthBar(firstPlayer.percentHealth, secondPlayer.percentHealth)
+        checkHealth()
+      }
+    }
+
+    function checkHealth() {
+      if (firstPlayer.currentHealth === 0) {
+        resolve(secondPlayer);
+      }
+      if (secondPlayer.currentHealth === 0) {
+        resolve(firstPlayer);
+      }
+    }
+
+    
   });
 }
 
