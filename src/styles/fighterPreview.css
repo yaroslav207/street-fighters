@@ -11,3 +11,30 @@
 .fighter-preview___left {
   align-items: flex-start;
 }
+
+.fighter-preview___root .fighter-preview___img {
+  height: 350px;
+}
+
+.fighter-preview___info{
+  background: linear-gradient(to right, black 0%, transparent 100%);
+  color: #cbe4f8;
+  width: 100%;
+}
+
+.fighter-preview___right .fighter-preview___info{
+  background: linear-gradient(to left, black 0%, transparent 100%);
+}
+
+.fighter-preview___right  .fighter-preview___img{
+  transform:rotateY(180deg)
+}
+
+.fighter-preview___info-item{
+  display: block;
+  font-size: 18px;
+  text-transform: uppercase;
+  font-family: Arial;
+  padding: 10px;
+}
+
