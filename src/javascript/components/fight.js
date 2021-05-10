@@ -107,6 +107,14 @@ export function getBlockPower(fighter) {
   return fighter.defense * dodgeChance;
 }
 
+function changeHealthBar(firstFighterHealth, secondFighterHealth) {
+  const firstFighterHealthBar = document.getElementById('left-fighter-indicator');
+  const secondFighterHealthBar = document.getElementById('right-fighter-indicator');
+
+  firstFighterHealthBar.style.width = firstFighterHealth + '%'
+  secondFighterHealthBar.style.width = secondFighterHealth + '%'
+}
+
 class Player {
   constructor(playerInfo) {
     this._id = playerInfo._id;
